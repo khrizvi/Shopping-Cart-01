@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="mobileMnsBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="input-1" type="text" class="form-control text-center" value="1">
+                           <button id="mobilePlsBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$<span id="mobileCost">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="coverMnsBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="input-2" type="text" class="form-control text-center" value="1">
+                           <button id="coverPlsBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$<span id="coverCost">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax(7%):</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$<span id="subtotal">1,278</span></h5>
+                        <h5>$<span id="tax">89.46</span></h5>
+                        <h5>$<span id="total">1,367.46</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+
+   <script>
+      const mobile = 1219;
+      const cover = 59;
+
+      //mobile plus button
+      const mobilePlsBtn = document.getElementById("mobilePlsBtn");
+      mobilePlsBtn.addEventListener('click', function () {
+         plsBtn("input-1", "mobileCost", mobile);
+         cart();
+      });
+
+
+      //mobile minus button
+      const mobileMnsBtn = document.getElementById("mobileMnsBtn");
+      mobileMnsBtn.addEventListener('click', function () {
+         mnsBtn("input-1", "mobileCost", mobile);
+         cart();
+      });
+
+
+
+      //cover plus button
+      const coverPlsBtn = document.getElementById("coverPlsBtn");
+      coverPlsBtn.addEventListener('click', function () {
+         plsBtn("input-2", "coverCost", cover);
+         cart();
+      });
+
+
+      //cover minus button
+      const coverMnsBtn = document.getElementById("coverMnsBtn");
+      coverMnsBtn.addEventListener('click', function () {
+         mnsBtn("input-2", "coverCost", cover);
+         cart();
+      });
+
+
+      //plus button function
+      function plsBtn(input, cost, device) {
+         const currentQuantity = document.getElementById(input).value;
+         const currentQuantityNumber = parseFloat(currentQuantity);
+         document.getElementById(input).value = currentQuantityNumber + 1;
+
+         const currentMobilePrice = document.getElementById(cost).innerText;
+         const currentMobilePriceNumber = parseFloat(currentMobilePrice);
+         document.getElementById(cost).innerText = currentMobilePriceNumber + device;
+      }
+
+      //minus button function
+      function mnsBtn(input, cost, device) {
+         const currentQuantity = document.getElementById(input).value;
+         const currentQuantityNumber = parseFloat(currentQuantity);
+         if (currentQuantityNumber > 1) {
+            document.getElementById(input).value = currentQuantityNumber - 1;
+
+            const currentMobilePrice = document.getElementById(cost).innerText;
+            const currentMobilePriceNumber = parseFloat(currentMobilePrice);
+            document.getElementById(cost).innerText = currentMobilePriceNumber - device;
+         }
+      };
+
+      function cart() {
+         const subtotal = parseFloat(document.getElementById("mobileCost").innerText)
+            + parseFloat(document.getElementById("coverCost").innerText);
+
+         document.getElementById("subtotal").innerText = subtotal;
+         document.getElementById("tax").innerText = (subtotal * 0.07).toFixed(2);
+
+
+         const total = parseFloat(document.getElementById("subtotal").innerText)
+            + parseFloat(document.getElementById("tax").innerText);
+
+         document.getElementById("total").innerText = total;
+      }
+   </script>
+
+</body>
+
+</html>
